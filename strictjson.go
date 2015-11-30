@@ -35,14 +35,14 @@ func checkErr(e error) error {
 //
 func Check(b []byte, obj interface{}) error {
 	v := reflect.ValueOf(obj)
-	var vi reflect.Value
-	if vi = reflect.Indirect(v); vi == v {
+	vi := reflect.Indirect(v)
+	if vi == v {
 		return checkErr(fmt.Errorf("non-pointer %s", vi.Kind()))
 	}
 	if vi.Kind() != reflect.Struct {
 		return checkErr(fmt.Errorf("non-struct %s", vi.Kind()))
 	}
-	m := make(map[string]interface{})
+	m := make(map[string]*json.RawMessage)
 	if err := json.Unmarshal(b, &m); err != nil {
 		return checkErr(err)
 	}
