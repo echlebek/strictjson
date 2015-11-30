@@ -1,6 +1,8 @@
 # strictjson
 Validate JSON objects against Go structs.
 
+[![Build Status](https://api.travis-ci.org/echlebek/strictjson.svg)](https://api.travis-ci.org/echlebek/strictjson)
+
 Example:
 
     type Foo struct {
