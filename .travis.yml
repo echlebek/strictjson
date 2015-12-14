@@ -11,4 +11,4 @@ script:
   - go test -coverprofile={{.Dir}}/coverprofile github.com/echlebek/strictjson
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash) -f coverprofile
+  - bash <(curl -s https://codecov.io/bash) -f {{.Dir}}/coverprofile
