@@ -1,7 +1,8 @@
 # strictjson
 Validate JSON objects against Go structs.
 
-[![Build Status](https://api.travis-ci.org/echlebek/strictjson.svg)](https://api.travis-ci.org/echlebek/strictjson)
+[![Build Status](https://api.travis-ci.org/echlebek/strictjson.svg)](https://travis-ci.org/echlebek/strictjson)
+[![Coverage Status](http://codecov.io/github/echlebek/strictjson/coverage.svg?branch=master)](http://codecov.io/github/echlebek/strictjson?branch=master)
 
 `strictjson.Check` allows you to check if all of the fields in a struct are satisfied
 by the incoming JSON message.
