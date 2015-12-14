@@ -46,6 +46,18 @@ func TestCheckMissingKey(t *testing.T) {
 
 	var f Foo
 
+	if err := Check([]byte(input1), f); err == nil {
+		t.Errorf("expected error")
+	} else if !strings.Contains(err.Error(), "[D]") {
+		t.Errorf("bad error: %s", err)
+	}
+	if err := Check([]byte(input2), f); err == nil {
+		t.Errorf("expected error")
+	} else if !strings.Contains(err.Error(), "[B]") {
+		t.Errorf("bad error: %s", err)
+	}
+
+	// Repeat with pointer to f
 	if err := Check([]byte(input1), &f); err == nil {
 		t.Errorf("expected error")
 	} else if !strings.Contains(err.Error(), "[D]") {
@@ -84,7 +96,7 @@ func TestCheckOmitEmpty(t *testing.T) {
 func TestCheckInvalidTarget(t *testing.T) {
 	if err := Check(nil, 1); err == nil {
 		t.Error("expected error")
-	} else if !strings.Contains(err.Error(), "non-pointer") {
+	} else if !strings.Contains(err.Error(), "non-struct") {
 		t.Errorf("bad error: %s", err)
 	}
 	m := make(map[string]interface{})

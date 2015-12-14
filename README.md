@@ -21,4 +21,4 @@ Example:
     }
 
 In the above example, if a user tries to supply a json message that doesn't contain
-keys `a` and `b`, `json.Unmarshal` will return an error.
+keys `a` and `b`, `strictjson.Check` will return an error.

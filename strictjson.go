@@ -35,20 +35,19 @@ func checkErr(e error) error {
 //
 func Check(b []byte, obj interface{}) error {
 	v := reflect.ValueOf(obj)
-	vi := reflect.Indirect(v)
-	if vi == v {
-		return checkErr(fmt.Errorf("non-pointer %s", vi.Kind()))
+	for v.Kind() == reflect.Ptr {
+		v = reflect.Indirect(v)
 	}
-	if vi.Kind() != reflect.Struct {
-		return checkErr(fmt.Errorf("non-struct %s", vi.Kind()))
+	if v.Kind() != reflect.Struct {
+		return checkErr(fmt.Errorf("non-struct %s", v.Kind()))
 	}
 	m := make(map[string]*json.RawMessage)
 	if err := json.Unmarshal(b, &m); err != nil {
 		return checkErr(err)
 	}
 	var errors []string
-	vt := vi.Type()
-	for i := 0; i < vi.NumField(); i++ {
+	vt := v.Type()
+	for i := 0; i < v.NumField(); i++ {
 		field := vt.Field(i)
 		if tag := field.Tag.Get("json"); tag == "" || strings.Contains(tag, ",omitempty") {
 			continue
