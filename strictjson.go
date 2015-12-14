@@ -11,8 +11,12 @@ func checkErr(e error) error {
 	return fmt.Errorf("strictjson: Check(%s)", e)
 }
 
-// Check checks that all of obj's struct fields are provided by the JSON
-// object encoded in b.
+// Check checks that all of `obj`'s struct fields are provided by the JSON
+// object encoded in `b`.
+//
+// If there are any fields indicated by a `json` tag that are not present
+// in the object encoded in `b`, an error will be returned indicating the
+// missing fields.
 //
 // If obj is not a struct, an error will be returned.
 //
