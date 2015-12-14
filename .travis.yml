@@ -6,7 +6,9 @@ go:
   - 1.5
   - tip
 
-before_install:
-  - pip install codecov
+script:
+  - go vet github.com/echlebek/strictjson
+  - go test -coverprofile={{.Dir}}/coverprofile github.com/echlebek/strictjson
+
 after_success:
-  - codecov
+  - bash <(curl -s https://codecov.io/bash) -f coverprofile
