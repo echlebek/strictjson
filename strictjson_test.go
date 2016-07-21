@@ -1,6 +1,7 @@
 package strictjson
 
 import (
+	"encoding/json"
 	"strings"
 	"testing"
 )
@@ -106,4 +107,46 @@ func TestCheckInvalidTarget(t *testing.T) {
 		t.Errorf("bad error: %s", err)
 	}
 
+}
+
+func TestOmitField(t *testing.T) {
+	var f Foo
+	if err := Check([]byte(`{"b": "foobar"}`), &f, "a"); err != nil {
+		t.Error(err)
+	}
+}
+
+type Foo struct {
+	A int    `json:"a"`
+	B string `json:"b"`
+}
+
+func (f *Foo) UnmarshalJSON(b []byte) error {
+	type __ Foo
+	var g __
+	if err := Check(b, f); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(b, &g); err != nil {
+		return err
+	}
+	*f = Foo(g)
+	return nil
+}
+
+func TestUnmarshalJSON(t *testing.T) {
+
+	var f Foo
+
+	if err := json.Unmarshal([]byte(`{"a": 10, "b": "foobar"}`), &f); err != nil {
+		t.Error(err)
+	}
+
+	if want := (Foo{10, "foobar"}); f != want {
+		t.Errorf("bad unmarshal: want %+v, got %+v", want, f)
+	}
+
+	if err := json.Unmarshal([]byte(`{"b": "foobar"}`), &f); err == nil {
+		t.Error("expected error")
+	}
 }
