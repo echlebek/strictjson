@@ -11,15 +11,21 @@ by the incoming JSON message.
 Example:
 
     type Foo struct {
-        A int    `json:"a"`
-        B string `json:"b"`
+    	A int    `json:"a"`
+    	B string `json:"b"`
     }
 
     func (f *Foo) UnmarshalJSON(b []byte) error {
-        if err := strictjson.Check(b, f); err != nil {
-            return err
-        }
-        return json.Unmarshal(b, f)
+    	type __ Foo
+    	var g __
+    	if err := Check(b, f); err != nil {
+    		return err
+    	}
+    	if err := json.Unmarshal(b, &g); err != nil {
+    		return err
+    	}
+    	*f = Foo(g)
+    	return nil
     }
 
 In the above example, if a user tries to supply a json message that doesn't contain
