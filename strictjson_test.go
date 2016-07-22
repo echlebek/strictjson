@@ -49,24 +49,24 @@ func TestCheckMissingKey(t *testing.T) {
 
 	if err := Check([]byte(input1), f); err == nil {
 		t.Errorf("expected error")
-	} else if !strings.Contains(err.Error(), "[D]") {
+	} else if !strings.Contains(err.Error(), "[d]") {
 		t.Errorf("bad error: %s", err)
 	}
 	if err := Check([]byte(input2), f); err == nil {
 		t.Errorf("expected error")
-	} else if !strings.Contains(err.Error(), "[B]") {
+	} else if !strings.Contains(err.Error(), "[b]") {
 		t.Errorf("bad error: %s", err)
 	}
 
 	// Repeat with pointer to f
 	if err := Check([]byte(input1), &f); err == nil {
 		t.Errorf("expected error")
-	} else if !strings.Contains(err.Error(), "[D]") {
+	} else if !strings.Contains(err.Error(), "[d]") {
 		t.Errorf("bad error: %s", err)
 	}
 	if err := Check([]byte(input2), &f); err == nil {
 		t.Errorf("expected error")
-	} else if !strings.Contains(err.Error(), "[B]") {
+	} else if !strings.Contains(err.Error(), "[b]") {
 		t.Errorf("bad error: %s", err)
 	}
 }
@@ -86,7 +86,7 @@ func TestCheckOmitEmpty(t *testing.T) {
 	}
 	if err := Check([]byte(input2), &f); err == nil {
 		t.Error("expected error")
-	} else if !strings.Contains(err.Error(), "[B]") {
+	} else if !strings.Contains(err.Error(), "[b]") {
 		t.Errorf("bad error: %s", err)
 	}
 	if err := Check([]byte(input3), &f); err != nil {

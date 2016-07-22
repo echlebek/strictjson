@@ -68,7 +68,7 @@ func Check(b []byte, obj interface{}, omit ...string) error {
 		if tag := field.Tag.Get("json"); tag == "" || strings.Contains(tag, ",omitempty") {
 			continue
 		} else if _, ok := m[tag]; !ok {
-			errors = append(errors, field.Name)
+			errors = append(errors, tag)
 		}
 	}
 	if errors != nil {
